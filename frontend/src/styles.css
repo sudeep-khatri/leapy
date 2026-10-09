@@ -174,14 +174,14 @@ body {
   letter-spacing: 0; 
 }
 
-.leapy-shell { 
+.lipiAI-shell { 
   min-height: 100svh; 
   display: flex; 
   flex-direction: column;
   background: var(--page-gradient); 
 }
 
-.leapy-shell:has(.workspace) {
+.lipiAI-shell:has(.workspace) {
   background: var(--dashboard-gradient); 
 }
 

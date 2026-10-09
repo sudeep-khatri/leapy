@@ -2,9 +2,9 @@ import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/about')({
   head: () => ({ meta: [
-    { title: 'About — Leapy' },
+    { title: 'About — LipiAI' },
     { name: 'description', content: 'Connecting the inscriptions of the Kathmandu Valley with modern understanding.' },
-    { property: 'og:title', content: 'About — Leapy' },
+    { property: 'og:title', content: 'About — LipiAI' },
     { property: 'og:description', content: 'Preserving Prachalit Newa inscriptions for generations.' },
     { property: 'og:type', content: 'website' },
     { name: 'twitter:card', content: 'summary_large_image' },

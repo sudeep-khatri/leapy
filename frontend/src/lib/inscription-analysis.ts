@@ -4,7 +4,7 @@ export type InscriptionResult = { translation: string; summary: string };
 export async function analyzeInscription(
   image: File,
   signal?: AbortSignal,
-  endpoint = import.meta.env['VITE_LEAPY_ANALYSIS_URL'],
+  endpoint = import.meta.env['VITE_LIPIAI_ANALYSIS_URL'],
 ): Promise<InscriptionResult> {
   if (!endpoint) {
     throw new Error('Image selected. Analysis is not connected yet.');
