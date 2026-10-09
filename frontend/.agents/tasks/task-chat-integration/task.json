@@ -1,0 +1,7 @@
+{
+  "task_id": "task-chat-integration",
+  "task_description": "Integrate an interactive Nepal Bhasa & Nepali AI Chat Platform into the LipiAI frontend (TanStack Start / React 19 / Tailwind v4). Create chat-service.ts, chat-interface.tsx, and routes/chat.tsx; add Chat nav link to the shell; append chat CSS; add Ranjana @font-face; document env vars. Three chat modes: Nepal Bhasa Devanagari, Nepali Ranjana, Nepal Bhasa Ranjana. Ranjana is font-only rendering (same Unicode codepoints as Devanagari, displayed by RanjanaUNICODE1.0.ttf).",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002"],
+  "blocked_reason": null
+}

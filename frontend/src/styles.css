@@ -316,3 +316,144 @@ body {
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 .notice-title { font-size: 23px; font-weight: 700; }
 .notice-body { font-size: 17px; line-height: 1.55; color: black; }
+
+@font-face {
+  font-family: 'RanjanaUnicode';
+  src: url('https://cdn.jsdelivr.net/gh/virtualvinodh/aksharamukha/aksharamukha-front/src/statics/RanjanaUNICODE1.0.ttf') format('truetype');
+  font-display: swap;
+}
+
+:root {
+  --chat-bg: oklch(0.243 0.064 247);
+  --chat-msg-user: oklch(0.299 0.082 249);
+  --chat-msg-ai: oklch(0.22 0.055 246);
+  --chat-text: oklch(0.805 0.019 244);
+  --chat-input-bg: oklch(0.299 0.082 249);
+  --chat-border: oklch(0.38 0.07 247 / 60%);
+  --chat-send-bg: oklch(0.255 0.036 242);
+  --chat-send-fg: oklch(0.95 0.008 244);
+}
+
+.chat-page {
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chat-mode-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.chat-mode-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--nav-ink);
+}
+
+.chat-mode-select {
+  min-width: 260px;
+  background-color: var(--chat-input-bg);
+}
+
+.chat-messages {
+  background: var(--chat-bg);
+  border-radius: 12px;
+  height: 440px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  max-width: 78%;
+}
+
+.chat-message--user {
+  align-self: flex-end;
+}
+
+.chat-message--assistant {
+  align-self: flex-start;
+}
+
+.chat-message__bubble {
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.chat-message--user .chat-message__bubble {
+  border-bottom-right-radius: 4px;
+  background: var(--chat-msg-user);
+  color: var(--chat-text);
+}
+
+.chat-message--assistant .chat-message__bubble {
+  border-bottom-left-radius: 4px;
+  background: var(--chat-msg-ai);
+  color: var(--chat-text);
+}
+
+.chat-message__time {
+  font-size: 11px;
+  color: var(--chat-text);
+  opacity: 0.55;
+}
+
+.chat-font--devanagari {
+  font-family: var(--font-body);
+}
+
+.chat-font--ranjana {
+  font-family: 'RanjanaUnicode', var(--font-body);
+}
+
+.chat-status {
+  font-family: var(--font-literary);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--chat-text);
+  opacity: 0.7;
+}
+
+.chat-error {
+  font-size: 13px;
+  color: var(--destructive);
+}
+
+.chat-input-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.chat-input {
+  flex: 1;
+  background: var(--chat-input-bg);
+  border-color: var(--chat-border);
+  color: var(--chat-text);
+  resize: none;
+  min-height: 44px;
+  max-height: 140px;
+}
+
+.chat-send-btn {
+  height: 44px;
+  padding: 0 18px;
+  background: var(--chat-send-bg);
+  color: var(--chat-send-fg);
+}
+
+@media (max-width: 640px) {
+  .chat-messages { height: 360px; }
+  .chat-page { padding: 16px; }
+}

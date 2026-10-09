@@ -13,6 +13,7 @@ export function LipiAIShell({ children }: { children: ReactNode }) {
       <header className="site-header">
         <nav className="site-nav" aria-label="Main navigation">
           <Link to="/about" className="nav-link">About</Link>
+          <Link to="/chat" className="nav-link">Chat</Link>
           <Link to="/" className="logo-mark" aria-label="LipiAI home">
             <img src="/logo.png" alt="" width={44} height={44} />
           </Link>
