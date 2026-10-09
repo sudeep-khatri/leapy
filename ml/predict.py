@@ -79,7 +79,7 @@ if __name__ == "__main__":
     test_csv = os.path.join(PROJECT_ROOT, "data_splits", "test.csv")
     if os.path.exists(test_csv):
         df = pd.read_csv(test_csv)
-        row = df.iloc[0]
+        row = df.sample(n=1).iloc[0]
 
         img_col = "image_path" if "image_path" in df.columns else df.columns[0]
         text_col = "text" if "text" in df.columns else df.columns[1]
