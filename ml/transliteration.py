@@ -1,0 +1,36 @@
+import requests
+
+class PrachalitTransliterator:
+    def __init__(self):
+        self.newa_to_dev_map = {
+            '𑐀': 'अ', '𑐁': 'आ', '𑐂': 'इ', '𑐃': 'ई', '𑐄': 'उ', '𑐅': 'ऊ', 
+            '𑐊': 'ए', '𑐋': 'ऐ', '𑐌': 'ओ', '𑐍': 'औ',
+            '𑐎': 'क', '𑐏': 'ख', '𑐐': 'ग', '𑐑': 'घ', '𑐒': 'ङ',
+            '𑐓': 'च', '𑐔': 'छ', '𑐕': 'ज', '𑐖': 'झ', '𑐗': 'ञ',
+            '𑐘': 'ट', '𑐙': 'ठ', '𑐚': 'ड', '𑐛': 'ढ', '𑐜': 'ण',
+            '𑐝': 'त', '𑐞': 'थ', '𑐟': 'द', '𑐠': 'ध', '𑐡': 'न',
+            '𑐢': 'प', '𑐣': 'न', '𑐤': 'फ', '𑐥': 'प', '𑐦': 'फ', 
+            '𑐧': 'ब', '𑐨': 'भ', '𑐩': 'म', '𑐪': 'र', '𑐫': 'य', 
+            '𑐮': 'ल', '𑐰': 'व', '𑐱': 'श', '𑐲': 'ष', '𑐳': 'स', '𑐴': 'ह',
+            '𑐵': 'ा', '𑐶': 'ि', '𑐷': 'ी', '𑐸': 'ु', '𑐹': 'ू', 
+            '𑐾': 'े', '𑐿': 'ै', '𑑀': 'ो', '𑑁': 'ौ',
+            '𑑂': '्', '𑑃': 'ँ', '𑑄': 'ं', '𑑅': 'ः'
+        }
+        self.trans_table = str.maketrans(self.newa_to_dev_map)
+
+    def to_devanagari(self, text: str) -> str:
+        return text.translate(self.trans_table)
+
+if __name__ == "__main__":
+    transliterator = PrachalitTransliterator()
+    
+    raw_ocr = "𑐠𑑂𑐰𑐒𑐵𑐩𑑂𑐴𑐡𑐾𑐰𑐠𑑂𑐰𑐦𑐮𑑂𑐫𑐳𑐠𑐵𑐥𑐣𑐵𑐫𑐵𑐒𑐣"
+    
+    devanagari_text = transliterator.to_devanagari(raw_ocr)
+    print(f"Transliterated: {devanagari_text}") 
+    
+    #backend_url = "http://localhost:8000/process-newa"
+    #payload = {"devanagari_text": devanagari_text}
+    
+    #response = requests.post(backend_url, json=payload)
+    #print("Backend Gemma 4 Response:", response.json())
