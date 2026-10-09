@@ -70,7 +70,7 @@ def predict_single_image(image_path):
     return decoded_text
 
 
-def test_random_csv(csv_path="random.csv"):
+def test_random_csv(csv_path="data_splits/random.csv"):
     if not os.path.exists(csv_path):
         print(f"Error: CSV file '{csv_path}' not found.")
         return
@@ -103,4 +103,4 @@ def test_random_csv(csv_path="random.csv"):
 
 
 if __name__ == "__main__":
-    test_random_csv("random.csv")
+    test_random_csv("data_splits/random.csv")
