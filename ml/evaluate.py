@@ -1,8 +1,8 @@
 import torch
 from torch.utils.data import DataLoader
 import pandas as pd
-from model import CRNN
-from ocr_dataset import PrachalitOCRDataset, vocab, char_map, decode_ids
+from ml.model import CRNN
+from ml.ocr_dataset import PrachalitOCRDataset, vocab, char_map, decode_ids
 import jiwer
 
 def crnn_collate_fn(batch):

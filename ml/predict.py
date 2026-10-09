@@ -7,6 +7,7 @@ from model import CRNN
 from ocr_dataset import char_map, decode_ids, vocab
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def resolve_image_path(base_dir, file_name):
@@ -58,7 +59,10 @@ def predict_single_image(image_path):
     num_classes = len(vocab) + 1
     model = CRNN(num_classes=num_classes).to(DEVICE)
     model.load_state_dict(
-        torch.load("checkpoints/crnn_best.pth", map_location=DEVICE)
+        torch.load(
+            os.path.join(PROJECT_ROOT, "checkpoints", "crnn_best.pth"),
+            map_location=DEVICE,
+        )
     )
     model.eval()
 
@@ -71,7 +75,7 @@ def predict_single_image(image_path):
 
 
 if __name__ == "__main__":
-    test_csv = "data_splits/test.csv"
+    test_csv = os.path.join(PROJECT_ROOT, "data_splits", "test.csv")
     if os.path.exists(test_csv):
         df = pd.read_csv(test_csv)
         row = df.iloc[0]
@@ -82,7 +86,9 @@ if __name__ == "__main__":
         raw_filename = row[img_col]
         ground_truth = row[text_col] if text_col in df.columns else "N/A"
 
-        image_path = resolve_image_path("images", raw_filename)
+        image_path = resolve_image_path(
+            os.path.join(PROJECT_ROOT, "images"), raw_filename
+        )
 
         if image_path:
             predicted_text = predict_single_image(image_path)
@@ -93,3 +99,5 @@ if __name__ == "__main__":
             print("=" * 45 + "\n")
         else:
             print(f"Could not locate image '{raw_filename}' inside 'images/'.")
+    else:
+        print(f"Test CSV not found: {test_csv}")

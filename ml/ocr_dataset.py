@@ -5,9 +5,14 @@ import numpy as np
 import pandas as pd
 import torch
 from torch.utils.data import Dataset
+import sys
+sys.stdout.reconfigure(encoding="utf-8")
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # 1. Load Vocabulary Map
-with open("vocabulary.json", "r", encoding="utf-8") as f:
+vocabulary_path = os.path.join(os.path.dirname(__file__), "vocabulary.json")
+with open(vocabulary_path, "r", encoding="utf-8") as f:
     vocab = json.load(f)
 
 # Reverse vocabulary map (ID -> Character)
@@ -41,14 +46,21 @@ class PrachalitOCRDataset(Dataset):
 
     def __init__(
         self,
-        csv_file="transcription_clean.csv",
+        csv_file="ml/transcription_clean.csv",
         img_dir="images",
         vocab_dict=vocab,
         target_h=32,
         target_w=512,
     ):
-        self.df = pd.read_csv(csv_file)
-        self.img_dir = img_dir
+        csv_path = (
+            csv_file
+            if os.path.isabs(csv_file)
+            else os.path.join(PROJECT_ROOT, csv_file)
+        )
+        self.df = pd.read_csv(csv_path)
+        self.img_dir = (
+            img_dir if os.path.isabs(img_dir) else os.path.join(PROJECT_ROOT, img_dir)
+        )
         self.vocab = vocab_dict
         self.target_h = target_h
         self.target_w = target_w

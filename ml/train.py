@@ -4,8 +4,8 @@ import torch.nn as nn
 from torch.optim.lr_scheduler import CosineAnnealingLR
 from torch.utils.data import DataLoader
 
-from model import CRNN
-from ocr_dataset import PrachalitOCRDataset, vocab
+from ml.model import CRNN
+from ml.ocr_dataset import PrachalitOCRDataset, vocab
 
 
 def crnn_collate_fn(batch):
