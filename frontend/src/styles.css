@@ -63,25 +63,25 @@
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(0.97 0.018 151);
-  --foreground: oklch(0.23 0.035 163);
+  --background: oklch(0.985 0.012 235);
+  --foreground: oklch(0.23 0.035 255);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.23 0.035 163);
+  --card-foreground: oklch(0.23 0.035 255);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.23 0.035 163);
+  --popover-foreground: oklch(0.23 0.035 255);
   --primary: oklch(0.48 0.15 35);
   --primary-foreground: oklch(0.98 0.01 85);
-  --secondary: oklch(0.92 0.035 151);
-  --secondary-foreground: oklch(0.27 0.05 163);
-  --muted: oklch(0.94 0.025 151);
-  --muted-foreground: oklch(0.43 0.04 163);
+  --secondary: oklch(0.94 0.022 235);
+  --secondary-foreground: oklch(0.27 0.05 255);
+  --muted: oklch(0.95 0.018 235);
+  --muted-foreground: oklch(0.43 0.04 255);
   --accent: oklch(0.9 0.045 48);
   --accent-foreground: oklch(0.29 0.06 35);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.98 0.01 85);
-  --border: oklch(0.86 0.025 157);
-  --input: oklch(0.86 0.025 157);
-  --ring: oklch(0.55 0.1 163);
+  --border: oklch(0.88 0.02 238);
+  --input: oklch(0.88 0.02 238);
+  --ring: oklch(0.61 0.1 245);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -144,25 +144,25 @@
 }
 
 :root {
-  --sky-top: oklch(0.97 0.018 151);
-  --sky-bottom: oklch(0.93 0.035 147);
-  --dashboard-bottom: oklch(0.89 0.055 157);
-  --ink: oklch(0.22 0.035 163);
-  --nav-ink: oklch(0.35 0.045 163);
+  --sky-top: oklch(0.99 0.012 235);
+  --sky-bottom: oklch(0.96 0.022 235);
+  --dashboard-bottom: oklch(0.93 0.035 240);
+  --ink: oklch(0.22 0.035 255);
+  --nav-ink: oklch(0.35 0.045 255);
   --logo: oklch(0.28 0.09 252);
   --logo-stroke: oklch(0.74 0.065 251);
-  --upload: oklch(0.8 0.075 153);
-  --result-panel: oklch(0.29 0.055 164);
-  --result-field: oklch(0.35 0.06 164);
-  --result-text: oklch(0.95 0.018 153);
-  --scroll-thumb: oklch(0.56 0.075 163);
+  --upload: oklch(0.9 0.045 235);
+  --result-panel: oklch(0.29 0.045 255);
+  --result-field: oklch(0.36 0.05 255);
+  --result-text: oklch(0.96 0.012 235);
+  --scroll-thumb: oklch(0.6 0.075 245);
   --primary: oklch(0.48 0.15 35);
   --primary-foreground: oklch(0.98 0.01 85);
-  --ring: oklch(0.55 0.1 163);
+  --ring: oklch(0.61 0.1 245);
   --font-body: 'Lato', Arial, sans-serif;
   --font-literary: 'EB Garamond', Georgia, serif;
-  --page-gradient: linear-gradient(145deg, var(--sky-top) 0%, var(--sky-bottom) 58%, oklch(0.94 0.035 43) 100%);
-  --dashboard-gradient: linear-gradient(145deg, var(--sky-top) 0%, oklch(0.92 0.04 150) 58%, var(--dashboard-bottom) 100%);
+  --page-gradient: linear-gradient(145deg, var(--sky-top) 0%, var(--sky-bottom) 58%, oklch(0.95 0.018 250) 100%);
+  --dashboard-gradient: linear-gradient(145deg, var(--sky-top) 0%, oklch(0.95 0.025 238) 58%, var(--dashboard-bottom) 100%);
 }
 @theme inline {
   --font-sans: var(--font-body);
@@ -326,13 +326,13 @@ body {
 }
 
 :root {
-  --chat-bg: oklch(0.975 0.014 151);
-  --chat-msg-user: oklch(0.36 0.075 163);
-  --chat-msg-ai: oklch(0.93 0.035 151);
-  --chat-text: oklch(0.23 0.035 163);
-  --chat-user-text: oklch(0.97 0.015 151);
-  --chat-input-bg: oklch(0.99 0.008 151);
-  --chat-border: oklch(0.82 0.035 157);
+  --chat-bg: oklch(0.985 0.012 235);
+  --chat-msg-user: oklch(0.4 0.075 250);
+  --chat-msg-ai: oklch(0.94 0.025 235);
+  --chat-text: oklch(0.23 0.035 255);
+  --chat-user-text: oklch(0.97 0.015 235);
+  --chat-input-bg: oklch(0.995 0.008 235);
+  --chat-border: oklch(0.85 0.03 240);
   --chat-send-bg: oklch(0.48 0.15 35);
   --chat-send-fg: oklch(0.98 0.01 85);
 }
@@ -493,7 +493,7 @@ body {
 /* ── Example prompt chips ── */
 .chat-examples { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; width: 100%; max-width: 480px; }
 .chat-example-chip { background: var(--chat-input-bg); border: 1px solid var(--chat-border); border-radius: 10px; padding: 9px 16px; font-size: 14px; font-family: var(--font-body); color: var(--chat-text); cursor: pointer; text-align: center; transition: background-color 150ms, border-color 150ms; }
-.chat-example-chip:hover { background: oklch(0.94 0.04 151); border-color: oklch(0.65 0.075 163); }
+.chat-example-chip:hover { background: oklch(0.95 0.025 238); border-color: oklch(0.65 0.075 245); }
 .chat-example-chip:focus-visible, .chat-send-btn:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
 
 /* ── Loading dots animation ── */
@@ -524,4 +524,3 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .chat-loading__dot { animation: none; opacity: 0.7; }
 }
-
