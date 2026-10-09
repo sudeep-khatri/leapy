@@ -5,6 +5,7 @@ import pandas as pd
 import torch
 from model import CRNN
 from ocr_dataset import char_map, decode_ids, vocab
+from transliteration import transliterate
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -95,7 +96,7 @@ if __name__ == "__main__":
             print("\n" + "=" * 45)
             print(f" Image Path : {image_path}")
             print(f" Ground Truth : {ground_truth}")
-            print(f" Transcribed  : {predicted_text}")
+            print(f"Transcribed : {transliterate(predicted_text)}")
             print("=" * 45 + "\n")
         else:
             print(f"Could not locate image '{raw_filename}' inside 'images/'.")
