@@ -6,11 +6,9 @@ import pandas as pd
 import torch
 from torch.utils.data import Dataset
 
-# 1. Load Vocabulary Map
 with open("ml/vocabulary.json", "r", encoding="utf-8") as f:
     vocab = json.load(f)
 
-# Reverse vocabulary map (ID -> Character)
 char_map = {v: k for k, v in vocab.items()}
 
 
@@ -60,11 +58,9 @@ class PrachalitOCRDataset(Dataset):
         """Helper to find image path across possible extensions (.png, .jpg, .jpeg)."""
         base_path = os.path.join(self.img_dir, str(raw_name))
 
-        # Check direct path first (in case extension is already in CSV)
         if os.path.exists(base_path):
             return base_path
 
-        # Check with common extensions
         for ext in [".jpg", ".png", ".jpeg", ".JPG", ".PNG"]:
             possible_path = f"{base_path}{ext}"
             if os.path.exists(possible_path):
@@ -78,16 +74,13 @@ class PrachalitOCRDataset(Dataset):
         row = self.df.iloc[idx]
         img_path = self._find_image_path(row["image"])
 
-        # Read Grayscale
         img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
         if img is None:
             raise ValueError(f"Failed to read image at: {img_path}")
 
-        # Contrast Enhancement (CLAHE)
         clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
         enhanced = clahe.apply(img)
 
-        # Aspect Ratio Resizing + Padding to (32, 512)
         h, w = enhanced.shape
         scale = self.target_h / float(h)
         new_w = int(w * scale)
@@ -110,11 +103,8 @@ class PrachalitOCRDataset(Dataset):
                 interpolation=cv2.INTER_AREA,
             )
 
-        # Normalize to [0.0, 1.0] and reshape to (1, 32, 512)
         normalized = final_img.astype(np.float32) / 255.0
         tensor_img = torch.tensor(normalized).unsqueeze(0)
-
-        # Target label tensor
         label_tensor = encode_text(str(row["text"]), self.vocab)
 
         return tensor_img, label_tensor, str(row["text"])

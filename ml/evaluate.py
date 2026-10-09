@@ -52,7 +52,6 @@ def evaluate_model():
     print(f"  Character Recognition Accuracy    : {accuracy:.2f}%")
     print(f"==========================================")
 
-    # Show first 5 predictions vs ground truth
     print("\n--- Sample Predictions ---")
     for i in range(min(5, len(ground_truths))):
         print(f"Sample {i+1}:")
