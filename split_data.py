@@ -9,3 +9,8 @@ os.makedirs("data_splits", exist_ok=True)
 train_df.to_csv("data_splits/train.csv", index=False)
 val_df.to_csv("data_splits/val.csv", index=False)
 test_df.to_csv("data_splits/test.csv", index=False)
+
+print("✓ Dataset splits created in data_splits/:")
+print(f"  - Train : {len(train_df)} samples")
+print(f"  - Val   : {len(val_df)} samples")
+print(f"  - Test  : {len(test_df)} samples")
