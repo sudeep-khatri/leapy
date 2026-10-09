@@ -42,7 +42,7 @@ class PrachalitOCRDataset(Dataset):
     def __init__(
         self,
         csv_file="ml/transcription_clean.csv",
-        img_dir="ml/images",
+        img_dir="images",
         vocab_dict=vocab,
         target_h=32,
         target_w=512,
