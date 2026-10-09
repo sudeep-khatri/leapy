@@ -5,7 +5,7 @@ from google import genai
 from google.genai import errors
 
 load_dotenv()
-client = genai.Client(api_key=os.getenv("GEMMA_API_KEY"))
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY") or os.getenv("GEMMA_API_KEY"))
 
 def analyze_manuscript(devanagari_text: str) -> str:
     """Takes transliterated Devanagari text from historical manuscripts,
