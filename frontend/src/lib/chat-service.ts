@@ -15,7 +15,9 @@ export interface ChatMode {
 export interface ChatMessage {
   id: string;
   role: ChatRole;
+  /** Raw Devanagari text — sent to backend for AI context */
   text: string;
+  /** Text in the display script (Devanagari or Ranjana) */
   displayText: string;
   fontClass: string;
   timestamp: number;
@@ -51,53 +53,73 @@ export const CHAT_MODES = [
   },
 ] as const satisfies ChatMode[];
 
-export async function convertScript(
-  text: string,
-  source: string,
-  target: string,
-  signal?: AbortSignal,
-): Promise<string> {
-  if (source === target) return text;
-  try {
-    const url = new URL('https://aksharamukha.appspot.com/api/public');
-    url.searchParams.set('source', source);
-    url.searchParams.set('target', target);
-    url.searchParams.set('text', text);
-    const response = await fetch(url.toString(), { signal: signal ?? null });
-    if (!response.ok) return text;
-    return await response.text();
-  } catch {
-    return text;
-  }
+export interface ChatApiResponse {
+  content: string;
+  content_devanagari: string;
+  script: ChatScript;
+  mode: string;
 }
 
+/**
+ * Send a chat message to the LipiAI backend.
+ *
+ * Backend pipeline:
+ *   1. Gemini → Nepali (Devanagari)
+ *   2. Google Translate → Nepal Bhasa  (Nepal Bhasa modes only)
+ *   3. aksharamukha → Ranjana script   (Ranjana modes only)
+ */
 export async function sendChatMessage(
   userText: string,
   mode: ChatMode,
   history: ChatMessage[],
   signal?: AbortSignal,
-  endpoint = import.meta.env['VITE_LIPIAI_CHAT_URL'],
-): Promise<string> {
-  if (!endpoint) {
-    throw new Error('Chat is not connected yet.');
+): Promise<ChatApiResponse> {
+  // Always use the explicit backend URL from env.
+  // VITE_LIPIAI_CHAT_URL must be set to http://localhost:5001 in frontend/.env
+  const base = (import.meta.env['VITE_LIPIAI_CHAT_URL'] as string | undefined)?.replace(/\/$/, '') ?? '';
+
+  if (!base) {
+    throw new Error(
+      'Backend URL not configured. Set VITE_LIPIAI_CHAT_URL=http://localhost:5001 in frontend/.env, then restart the dev server.',
+    );
   }
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      message: userText,
-      language: mode.language,
-      history: history.map((m) => ({ role: m.role, text: m.text })),
-    }),
-    signal: signal ?? null,
-  });
+
+  const messages = [
+    ...history.map((m) => ({ role: m.role, text: m.text })),
+    { role: 'user' as const, text: userText },
+  ];
+
+  let response: Response;
+  try {
+    response = await fetch(`${base}/api/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages, mode: mode.id }),
+      signal: signal ?? null,
+    });
+  } catch {
+    throw new Error(
+      'Cannot reach the backend. Make sure it is running:\n  cd leapy/backend\n  python app.py',
+    );
+  }
+
   if (!response.ok) {
-    throw new Error('The chat request failed. Please try again.');
+    const err = await response.json().catch(() => ({ error: `HTTP ${response.status}` })) as Record<string, unknown>;
+    throw new Error(typeof err['error'] === 'string' ? err['error'] : `Chat request failed (${response.status}).`);
   }
-  const data = (await response.json()) as Record<string, unknown>;
-  const reply = data['reply'];
-  if (typeof reply !== 'string') {
-    throw new Error('The chat returned an invalid response.');
+
+  const data = await response.json() as Record<string, unknown>;
+  const content = data['content'];
+  const content_devanagari = data['content_devanagari'];
+
+  if (typeof content !== 'string' || typeof content_devanagari !== 'string') {
+    throw new Error('Unexpected response format from backend.');
   }
-  return reply;
+
+  return {
+    content,
+    content_devanagari,
+    script: (data['script'] as ChatScript) ?? mode.script,
+    mode: (data['mode'] as string) ?? mode.id,
+  };
 }

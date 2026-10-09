@@ -8,6 +8,15 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   vite: {
+    server: {
+      proxy: {
+        // Proxy all /api/* requests to the Flask backend during dev
+        '/api': {
+          target: 'http://localhost:5001',
+          changeOrigin: true,
+        },
+      },
+    },
     optimizeDeps: {
       // Prebundle the renderer and hook-based controls together. Discovering
       // Radix after page load otherwise invalidates React's optimized URL and
