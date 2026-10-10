@@ -161,8 +161,8 @@
   --ring: oklch(0.61 0.1 245);
   --font-body: 'Lato', Arial, sans-serif;
   --font-literary: 'EB Garamond', Georgia, serif;
-  --page-gradient: linear-gradient(145deg, var(--sky-top) 0%, var(--sky-bottom) 58%, oklch(0.95 0.018 250) 100%);
-  --dashboard-gradient: linear-gradient(145deg, var(--sky-top) 0%, oklch(0.95 0.025 238) 58%, var(--dashboard-bottom) 100%);
+  --page-gradient: linear-gradient(180deg, #96B9E1 0%,#8da8c7 50%, #145A7A 100%);
+  --dashboard-gradient: linear-gradient(180deg, #96B9E1 0%, #004465 100%);
 }
 @theme inline {
   --font-sans: var(--font-body);
