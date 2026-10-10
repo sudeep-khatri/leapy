@@ -23,7 +23,6 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 
-// Example prompts shown in the empty state, one set per mode
 const EXAMPLE_PROMPTS: Record<string, string[]> = {
   'nepal-bhasa-devanagari': [
     'नेपाल भाषा थ्व जि?',
@@ -56,12 +55,10 @@ export function ChatInterface() {
   const mode = CHAT_MODES.find((m) => m.id === activeModeId) ?? CHAT_MODES[0]!;
   const examples = EXAMPLE_PROMPTS[activeModeId] ?? [];
 
-  // Auto-scroll to bottom whenever messages change
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
 
-  // Clear chat when mode changes
   const handleModeChange = useCallback((newModeId: string) => {
     abortRef.current?.abort();
     setActiveModeId(newModeId);
@@ -91,11 +88,10 @@ export function ChatInterface() {
     setError(null);
     setInputText('');
 
-    // Add user message immediately (display as Devanagari, backend converts AI reply)
     const userMsg: ChatMessage = {
       role: 'user',
       text: trimmed,
-      displayText: trimmed,   // user types in Devanagari; display as typed
+      displayText: trimmed,   
       fontClass: 'chat-font--devanagari',
       id: crypto.randomUUID(),
       timestamp: Date.now(),
@@ -105,12 +101,10 @@ export function ChatInterface() {
     setMessages(updatedMessages);
 
     try {
-      // Backend does: Gemini → Google Translate → aksharamukha script conversion
-      // We pass history WITHOUT the just-added user message (sendChatMessage appends it)
       const apiResponse = await sendChatMessage(
         trimmed,
         mode,
-        messages,      // history so far (not including this new message)
+        messages,    
         ctrl.signal,
       );
 
@@ -118,9 +112,7 @@ export function ChatInterface() {
 
       const assistantMsg: ChatMessage = {
         role: 'assistant',
-        // Store Devanagari for future AI context turns
         text: apiResponse.content_devanagari,
-        // Show script-converted text to user
         displayText: apiResponse.content,
         fontClass: mode.fontClass,
         id: crypto.randomUUID(),
@@ -132,12 +124,10 @@ export function ChatInterface() {
       if (ctrl.signal.aborted) return;
       const message = err instanceof Error ? err.message : 'An unexpected error occurred.';
       setError(message);
-      // Remove the user message we added optimistically on error
       setMessages(messages);
     } finally {
       if (!ctrl.signal.aborted) {
         setIsLoading(false);
-        // Refocus input after reply
         setTimeout(() => inputRef.current?.focus(), 0);
       }
     }

@@ -15,9 +15,7 @@ export interface ChatMode {
 export interface ChatMessage {
   id: string;
   role: ChatRole;
-  /** Raw Devanagari text — sent to backend for AI context */
   text: string;
-  /** Text in the display script (Devanagari or Ranjana) */
   displayText: string;
   fontClass: string;
   timestamp: number;
@@ -60,22 +58,12 @@ export interface ChatApiResponse {
   mode: string;
 }
 
-/**
- * Send a chat message to the LipiAI backend.
- *
- * Backend pipeline:
- *   1. Gemini → Nepali (Devanagari)
- *   2. Google Translate → Nepal Bhasa  (Nepal Bhasa modes only)
- *   3. aksharamukha → Ranjana script   (Ranjana modes only)
- */
 export async function sendChatMessage(
   userText: string,
   mode: ChatMode,
   history: ChatMessage[],
   signal?: AbortSignal,
 ): Promise<ChatApiResponse> {
-  // Always use the explicit backend URL from env.
-  // VITE_LIPIAI_CHAT_URL must be set to http://localhost:5001 in frontend/.env
   const base = (import.meta.env['VITE_LIPIAI_CHAT_URL'] as string | undefined)?.replace(/\/$/, '') ?? '';
 
   if (!base) {
